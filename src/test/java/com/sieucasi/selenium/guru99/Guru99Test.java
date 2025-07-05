@@ -8,7 +8,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 /**
@@ -33,8 +35,24 @@ public class Guru99Test {
     @Test
     public void testLoginGivenRightAccountSayHelloUserName() throws InterruptedException {
         myBrowser.get("https://demo.guru99.com/V4"); //duyệt trang trên object trình duyệt vừa new 
-        Thread.sleep(5000);
+
+        //tìm thẻ username và password qua: CSS Selector, JQuery, xPath, name, id, class...
+        //chính là 1 dạng câu query/SQL áp dụng cho tìm data thẻ phía sau trình duyệt
+        //xPath, CSS Selector ~~~ SQL
+        //trang Web/browser   ~~~ CSDL
+        // đưa câu query xPath cho myBrowsẻ, tìm thẻ giúp giống F12, Ctrl-F 
+        //nếu tìm thấy thẻ, là 1 object trả về, thuộc class WebElement
+        WebElement userTag = myBrowser.findElement(By.xpath("(//input[@name='uid'])[1]"));
+        userTag.sendKeys("mngr626980"); //gõ text nếu tìm thấy thẻ/tag 
+
+        WebElement passTag = myBrowser.findElement(By.cssSelector("input[name='password']"));
+        passTag.sendKeys("tYvEzez"); //gõ text nếu tìm thấy thẻ/tag 
+
+        WebElement loginTag = myBrowser.findElement(By.xpath("(//input[@name='btnLogin'])[1]"));
+        loginTag.click(); //bấm vào button nếu tìm thấy thẻ/tag 
         
+        Thread.sleep(10000);
+
     }
 
     @AfterAll
