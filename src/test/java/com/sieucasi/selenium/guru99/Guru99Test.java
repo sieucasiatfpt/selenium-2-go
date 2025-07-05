@@ -34,25 +34,45 @@ public class Guru99Test {
 
     @Test
     public void testLoginGivenRightAccountSayHelloUserName() throws InterruptedException {
+        
+        //tham số hóa qua mảng user/pass
+        String userName = "mngr626980"; 
+        String pass = "tYvEzez";
+        
         myBrowser.get("https://demo.guru99.com/V4"); //duyệt trang trên object trình duyệt vừa new 
 
         //tìm thẻ username và password qua: CSS Selector, JQuery, xPath, name, id, class...
         //chính là 1 dạng câu query/SQL áp dụng cho tìm data thẻ phía sau trình duyệt
         //xPath, CSS Selector ~~~ SQL
         //trang Web/browser   ~~~ CSDL
-        // đưa câu query xPath cho myBrowsẻ, tìm thẻ giúp giống F12, Ctrl-F 
+        // đưa câu query xPath cho myBrowser, tìm thẻ giúp giống F12, Ctrl-F 
         //nếu tìm thấy thẻ, là 1 object trả về, thuộc class WebElement
         WebElement userTag = myBrowser.findElement(By.xpath("(//input[@name='uid'])[1]"));
-        userTag.sendKeys("mngr626980"); //gõ text nếu tìm thấy thẻ/tag 
+        userTag.sendKeys(userName); //gõ text nếu tìm thấy thẻ/tag 
 
         WebElement passTag = myBrowser.findElement(By.cssSelector("input[name='password']"));
-        passTag.sendKeys("tYvEzez"); //gõ text nếu tìm thấy thẻ/tag 
+        passTag.sendKeys(pass); //gõ text nếu tìm thấy thẻ/tag 
 
         WebElement loginTag = myBrowser.findElement(By.xpath("(//input[@name='btnLogin'])[1]"));
         loginTag.click(); //bấm vào button nếu tìm thấy thẻ/tag 
         
-        Thread.sleep(10000);
-
+        Thread.sleep(3000); //cần chờ chuyển trang xong
+                            //do mạng, do kĩ thuật Front-end nhanh hay chậm
+                            //ép code mình dừng/chờ/wait để đồng bộ
+                            //tốc độ render ra trang mới. Tìm ngay tag
+                            //ở trang mới 99% Exception
+                            //do tìm thẻ mới ở trang cũ, trang mới chưa kịp render
+        //Wait khi chuyển trang! 
+        
+        WebElement helloTag = myBrowser.findElement(By.xpath("(//td[normalize-space()='Manger Id : mngr626980'])[1]"));
+        //lấy đc cái <td> chứa câu xin chào, in thử
+        System.out.println("Hello message after login successfully: " + 
+                            helloTag.getText());
+        String actualHelloMsg = helloTag.getText();
+        assertEquals("Manger Id : " + userName, actualHelloMsg);
+//        helloTag.click(); //bấm vào button nếu tìm thấy thẻ/tag
+        
+        Thread.sleep(5000);
     }
 
     @AfterAll
