@@ -33,7 +33,7 @@ public class Guru99Test {
     }
 
     @Test
-    public void testLoginGivenRightAccountSayHelloUserName() throws InterruptedException {
+    public void testLoginGivenRightAccountSayHelloUserName() throws InterruptedException { 
         
         //tham số hóa qua mảng user/pass
         String userName = "mngr626980"; 
